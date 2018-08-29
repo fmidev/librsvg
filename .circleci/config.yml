@@ -1,0 +1,56 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: centos:latest
+    steps:
+      - checkout
+      - run:
+          name: Update
+          command: .circleci/build.sh update
+      - run:
+          name: Install base tools and repositories
+          command: .circleci/build.sh prep
+      - run:
+          name: Prepare package caching
+          command: .circleci/build.sh cache
+      - run:
+          name: Install build dependencies
+          command: .circleci/build.sh deps
+      - run:
+          name: Build RPM
+          command: .circleci/build.sh rpm
+      - persist_to_workspace:
+          root: /root/dist
+          paths: ./*.rpm
+  test:
+    docker:
+      - image: centos:latest
+    steps:
+      - checkout
+      - run:
+          name: Update
+          command: .circleci/build.sh update
+      - run:
+          name: Install base tools and repositories
+          command: .circleci/build.sh prep
+      - run:
+          name: Prepare package caching
+          command: .circleci/build.sh cache
+      - attach_workspace:
+          at: /dist
+      - run:
+          name: Installation test
+          command: yum install -y /dist/*.rpm
+      - store_artifacts:
+          path: /dist
+          destination: dist/
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
