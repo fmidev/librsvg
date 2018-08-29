@@ -1,16 +1,21 @@
 Name:           librsvg2
 Summary:        An SVG library based on cairo
-Version:        2.40.21
-Release:        1%{?dist}
+Version:        2.40.6
+Release:        2%{?dist}
 
 License:        LGPLv2+
 Group:          System Environment/Libraries
-#VCS:           git:git://git.gnome.org/librsvg
-Source:         https://gitlab.gnome.org/GNOME/librsvg/-/archive/ef720eeabf6a1bf2bca9b31756398578d75998a6/librsvg-ef720eeabf6a1bf2bca9b31756398578d75998a6.tar.bz2
-Patch: https://gitlab.gnome.org/GNOME/librsvg/uploads/eeda157d104ed464602835c907eda6b8/0001-Added-partial-support-for-the-textPath-element.patch
+#VCS:           git://git.gnome.org/librsvg
+Source:         https://gitlab.gnome.org/GNOME/librsvg/-/archive/2.40.6/librsvg-2.40.6.tar.bz2
+#Patch: https://gitlab.gnome.org/GNOME/librsvg/uploads/eeda157d104ed464602835c907eda6b8/0001-Added-partial-support-for-the-textPath-element.patch
+Patch:  librsvg2-2.60-mheiskan.patch 
 
 Requires(post):   gdk-pixbuf2
 Requires(postun): gdk-pixbuf2
+BuildRequires:  bzip2
+BuildRequires:  curl
+BuildRequires:  rpm-build
+BuildRequires:  make
 BuildRequires:  libpng-devel
 BuildRequires:  glib2-devel
 BuildRequires:  gdk-pixbuf2-devel
