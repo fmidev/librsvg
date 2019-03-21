@@ -9,3 +9,5 @@ rpm:
 	test -r "$(SOURCEBASE)" || curl -o "$(SOURCEBASE)" $(SOURCE)
 	test -r "$(PATCHBASE)" || curl -o "$(PATCHBASE)" $(PATCH)
 	rpmbuild --define "_sourcedir $(PWD)" -ba $(SPEC)
+
+test:
